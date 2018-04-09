@@ -1,12 +1,14 @@
 package launch;
 
 import java.io.File;
+
 import org.apache.catalina.startup.Tomcat;
 
 public class Main {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
+    	try{
         String webappDirLocation = "WebContent/";
         Tomcat tomcat = new Tomcat();
 
@@ -14,7 +16,7 @@ public class Main {
         //Look for that variable and default to 8080 if it isn't there.
         String webPort = System.getenv("PORT");
         if(webPort == null || webPort.isEmpty()) {
-            webPort = "8080";
+            webPort = "8088";
         }
 
         tomcat.setPort(Integer.valueOf(webPort));
@@ -24,5 +26,11 @@ public class Main {
 
         tomcat.start();
         tomcat.getServer().await();
+    	}
+    	catch (Exception e) {
+			// TODO: handle exception
+    		e.printStackTrace();
+		}
     }
+    
 }
