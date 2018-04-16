@@ -1,0 +1,50 @@
+[{ 
+    "_id" : "5ac20d4d04613c55f8c7ade0", 
+    "mark" : 10.0, 
+    "time" : 10.0
+},
+{ 
+    "_id" : "5ac20d5204613c55f8c7ade1", 
+    "mark" : 25.0, 
+    "time" : 25.0
+},
+{ 
+    "_id" : "5ac20d5604613c55f8c7ade2", 
+    "mark" : 50.0, 
+    "time" : 50.0
+},
+{ 
+    "_id" : "5ac20d5b04613c55f8c7ade3", 
+    "mark" : 75.0, 
+    "time" : 75.0
+},
+{ 
+    "_id" : "5ac20d5f04613c55f8c7ade4", 
+    "mark" : 100.0, 
+    "time" : 100.0
+},
+{ 
+    "_id" : "5ac348e38aeaa6f3325ed6b8", 
+    "mark" : 10.0, 
+    "time" : 10.0
+},
+{ 
+    "_id" : "5ac348e38aeaa6f3325ed6b9", 
+    "mark" : 25.0, 
+    "time" : 25.0
+},
+{ 
+    "_id" : "5ac348e38aeaa6f3325ed6ba", 
+    "mark" : 50.0, 
+    "time" : 50.0
+},
+{ 
+    "_id" : "5ac348e38aeaa6f3325ed6bb", 
+    "mark" : 75.0, 
+    "time" : 75.0
+},
+{ 
+    "_id" : "5ac348e38aeaa6f3325ed6bc", 
+    "mark" : 100.0, 
+    "time" : 100.0
+}]

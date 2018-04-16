@@ -1,1 +1,1 @@
-web:    sh target/bin/webapp
+web:    java $JAVA_OPTS -jar target/gandhiweb-0.0.1-SNAPSHOT.jar
