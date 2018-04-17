@@ -1,1 +1,1 @@
-web:    java $JAVA_OPTS -jar target/gandhiweb-0.0.1-SNAPSHOT.jar --port $PORT
+web:    java $JAVA_OPTS -jar target/gandhiweb-0.0.1-SNAPSHOT.jar --server.port=$PORT $JAR_OPTS
