@@ -20,7 +20,7 @@ public class QuizProperties {
 			try{
 				
 			properties=new Properties();
-			InputStream inputStream=QuizProperties.class.getResourceAsStream("/com/properties/quiz.properties");
+			InputStream inputStream=QuizProperties.class.getResourceAsStream("/quiz.properties");
 			properties.load(inputStream);
 			inputStream.close();
 			}

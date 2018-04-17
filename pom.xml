@@ -90,16 +90,27 @@
 
 
 	<build>
-	<resources>
+	<!-- <resources>
 	<resource>
-	<directory>src</directory>
+	<directory>src/com/properties</directory>
 	<excludes>
           <exclude>**/*.java</exclude>
         </excludes>
 	
 </resource>
-	</resources>
+	</resources> -->
 		<plugins>
+		
+		<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.7.0</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+		
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
 
 import main.java.com.prodapt.quiz.beans.Mark;
@@ -26,35 +27,32 @@ public class MarkController {
 	
 	
 	
-	public ResponseBean getMarksFromFile() throws JSONException {
+	public  List<Mark> getMarksFromFile() throws JSONException {
 
-		ResponseBean responceBean = new ResponseBean();
+		 List<Mark> responceBean = new ArrayList<Mark>();
 		try {
 			 JSONParser parser = new JSONParser();
-			InputStream inputStream=TopicController.class.getResourceAsStream("/com/properties/local.mark.json");
+			InputStream inputStream=TopicController.class.getResourceAsStream("/local.mark.json");
         	Reader reader=new InputStreamReader(inputStream);
             Object obj = parser.parse(reader);
             
             ObjectMapper objectMapper=new ObjectMapper();
-	         List<Mark> lTopics=objectMapper.readValue(obj.toString(), TypeFactory.collectionType(List.class, Mark.class));
-			responceBean = ResponseData.success(lTopics);
+            responceBean=objectMapper.readValue(obj.toString(), TypeFactory.collectionType(List.class, Mark.class));
 		}
 
 		catch (ParseException exception) {
 			// UTF-8 encoding not supported
-			responceBean = ResponseData.internalError();
 			exception.printStackTrace();
 		}
 
 		catch (FileNotFoundException exception) {
 			// Invalid Signing configuration / Couldn't convert Claims.
-			responceBean = ResponseData.internalError();
 			exception.printStackTrace();
 		}
 		
 		catch (IOException exception) {
 			// Invalid Signing configuration / Couldn't convert Claims.
-			responceBean = ResponseData.internalError();
+			//responceBean = ResponseData.internalError();
 			exception.printStackTrace();
 		}
 

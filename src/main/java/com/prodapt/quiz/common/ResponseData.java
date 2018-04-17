@@ -19,19 +19,13 @@ public class ResponseData {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("status", ResponseCode.INTERNAL_SERVER_ERROR);
 		jsonObject.put("statusMessage", ResponseMessage.INTERNAL_SERVER_ERROR);
-		responseData.setStatusCode(ResponseCode.INTERNAL_SERVER_ERROR);
+		//responseData.setStatusCode(ResponseCode.INTERNAL_SERVER_ERROR);
 		return responseData;
 	}
 
 	public static ResponseBean success(Object data) throws JSONException {
 		ResponseBean responseData = new ResponseBean();
-
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("data", data);
-		jsonObject.put("status", ResponseCode.SUCCESS);
-		jsonObject.put("statusMessage", ResponseMessage.SUCCESS);
-		responseData.setStatusCode(ResponseCode.SUCCESS);
-		responseData.setJsonObject(jsonObject);
+		responseData.setJsonObject(data);
 		return responseData;
 	}
 
@@ -40,7 +34,7 @@ public class ResponseData {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("status", ResponseCode.INTERNAL_SERVER_ERROR);
 		jsonObject.put("statusMessage", ResponseMessage.TOKEN_EXPIRED);
-		responseData.setStatusCode(ResponseCode.INTERNAL_SERVER_ERROR);
+		//responseData.setStatusCode(ResponseCode.INTERNAL_SERVER_ERROR);
 		responseData.setJsonObject(jsonObject);
 		return responseData;
 	}
@@ -50,7 +44,7 @@ public class ResponseData {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("status", ResponseCode.INTERNAL_SERVER_ERROR);
 		jsonObject.put("statusMessage", ResponseMessage.INVALID_TOKEN);
-		responseData.setStatusCode(ResponseCode.INTERNAL_SERVER_ERROR);
+		//responseData.setStatusCode(ResponseCode.INTERNAL_SERVER_ERROR);
 		responseData.setJsonObject(jsonObject);
 		return responseData;
 	}

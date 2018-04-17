@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
 
 import main.java.com.prodapt.quiz.beans.ResponseBean;
@@ -25,35 +26,34 @@ public class TopicController {
 
 	
 	
-	public ResponseBean getTopicsFromFile() throws JSONException {
+	public List<Topic> getTopicsFromFile() throws JSONException {
 
-		ResponseBean responceBean = new ResponseBean();
+		List<Topic> responceBean = new ArrayList<Topic>();
 		try {
 			 JSONParser parser = new JSONParser();
-			InputStream inputStream=TopicController.class.getResourceAsStream("/com/properties/local.topic.json");
+			InputStream inputStream=TopicController.class.getResourceAsStream("/local.topic.json");
         	Reader reader=new InputStreamReader(inputStream);
             Object obj = parser.parse(reader);
             
             ObjectMapper objectMapper=new ObjectMapper();
-	         List<Topic> lTopics=objectMapper.readValue(obj.toString(), TypeFactory.collectionType(List.class, Topic.class));
-			responceBean = ResponseData.success(lTopics);
+            responceBean=objectMapper.readValue(obj.toString(), TypeFactory.collectionType(List.class, Topic.class));
 		}
 
 		catch (ParseException exception) {
 			// UTF-8 encoding not supported
-			responceBean = ResponseData.internalError();
+			//responceBean = ResponseData.internalError();
 			exception.printStackTrace();
 		}
 
 		catch (FileNotFoundException exception) {
 			// Invalid Signing configuration / Couldn't convert Claims.
-			responceBean = ResponseData.internalError();
+			//responceBean = ResponseData.internalError();
 			exception.printStackTrace();
 		}
 		
 		catch (IOException exception) {
 			// Invalid Signing configuration / Couldn't convert Claims.
-			responceBean = ResponseData.internalError();
+			//responceBean = ResponseData.internalError();
 			exception.printStackTrace();
 		}
 

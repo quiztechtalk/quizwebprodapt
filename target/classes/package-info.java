@@ -5,4 +5,4 @@
  * @author gandhi.d
  *
  */
-package com.properties;
+package main.resources;

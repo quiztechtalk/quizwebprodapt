@@ -3,18 +3,16 @@ package main.java.com.prodapt.quiz.service;
 
 import java.io.IOException;
 
-import javax.websocket.server.PathParam;
-
-import main.java.com.prodapt.quiz.beans.ResponseBean;
 import main.java.com.prodapt.quiz.beans.Token;
 import main.java.com.prodapt.quiz.controller.TokenController;
 
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONException;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -24,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author gandhi.d
  *
  */
-@RestController("/token")
+@RestController
 public class TokenService {
 	
 	private static Logger log=Logger.getLogger(TokenService.class);
@@ -32,30 +30,26 @@ public class TokenService {
 	
 	
 	@RequestMapping(method = RequestMethod.POST,value="/createToken")
-	public ResponseBean createToken() throws JSONException{
-		ResponseBean responseBean=new TokenController().createToken();
-		return responseBean;
+	public String createToken() throws JSONException{
+		return new TokenController().createToken();
 	}
 	
 	@RequestMapping(method = RequestMethod.POST,value="/createToken/{user}/{time}")
-	public ResponseBean createTokenBasedOnTime(@PathParam("user") String user,@PathParam("time") String time) throws NumberFormatException, JSONException{
-		ResponseBean responseBean=new TokenController().createTokenBasedOnSessionTime(user,Integer.parseInt(time));
-		return responseBean;
+	public String createTokenBasedOnTime(@RequestParam(value="user", defaultValue="user") String user,@RequestParam(value="time", defaultValue="10") String time) throws NumberFormatException, JSONException{
+		return new TokenController().createTokenBasedOnSessionTime(user,Integer.parseInt(time));
 	}
 	
 	
 	@RequestMapping(method = RequestMethod.POST,value="/verifyToken")
-	public ResponseBean verifyToken(String token) throws JSONException{
+	public String verifyToken(@RequestBody String token) throws JSONException{
 		Token token2=getPojo(token, Token.class);
-		ResponseBean responseBean=new TokenController().verifyToken(token2.getToken());
-		return responseBean;
+		return new TokenController().verifyToken(token2.getToken());
 	}
 	
 	@RequestMapping(method = RequestMethod.POST,value="/verifyToken/{user}")
-	public ResponseBean verifyToken(@PathParam("user") String user, String token) throws JSONException{
+	public String verifyToken(@RequestParam(value="user", defaultValue="user") String user, @RequestBody String token) throws JSONException{
 		Token token2=getPojo(token, Token.class);
-		ResponseBean responseBean=new TokenController().verifyUserToken(user,token2.getToken());
-		return responseBean;
+		return new TokenController().verifyUserToken(user,token2.getToken());
 	}
 	
 	

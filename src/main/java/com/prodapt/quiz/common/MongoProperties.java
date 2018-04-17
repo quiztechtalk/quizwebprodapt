@@ -20,7 +20,7 @@ public class MongoProperties {
 			try{
 				
 			properties=new Properties();
-			InputStream inputStream=MongoProperties.class.getResourceAsStream("/com/properties/mongo.properties");
+			InputStream inputStream=MongoProperties.class.getResourceAsStream("/mongo.properties");
 			properties.load(inputStream);
 			inputStream.close();
 			}

@@ -1,9 +1,5 @@
 package main.java.com.prodapt.quiz.beans;
 
-import java.io.Serializable;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  * 
@@ -11,32 +7,18 @@ import org.json.JSONObject;
  *
  */
 
-public class ResponseBean implements Serializable {
+public class ResponseBean {
 	
-private static final long serialVersionUID = 12661L;
-private JSONObject jsonObject;
-private JSONArray jsonArray;
-private Integer statusCode;
+private Object data;
 
 
-public JSONObject getJsonObject() {
-	return jsonObject;
+public Object getJsonObject() {
+	return data;
 }
-public void setJsonObject(JSONObject jsonObject) {
-	this.jsonObject = jsonObject;
+public void setJsonObject(Object data) {
+	this.data = data;
 }
-public JSONArray getJsonArray() {
-	return jsonArray;
-}
-public void setJsonArray(JSONArray jsonArray) {
-	this.jsonArray = jsonArray;
-}
-public Integer getStatusCode() {
-	return statusCode;
-}
-public void setStatusCode(Integer statusCode) {
-	this.statusCode = statusCode;
-}
+
 
 
 }

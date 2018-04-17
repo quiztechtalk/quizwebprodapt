@@ -1,7 +1,9 @@
 package main.java.com.prodapt.quiz.service;
 
 
-import main.java.com.prodapt.quiz.beans.ResponseBean;
+import java.util.List;
+
+import main.java.com.prodapt.quiz.beans.Mark;
 import main.java.com.prodapt.quiz.controller.MarkController;
 
 import org.json.JSONException;
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author gandhi.d
  *
  */
-@RestController("/mark")
+@RestController
 public class MarkService {
 	
 	
@@ -21,9 +23,9 @@ public class MarkService {
 	
 	
 	@RequestMapping("/getMarks")
-	public ResponseBean getMarks() throws JSONException{
+	public List<Mark> getMarks() throws JSONException{
 		
-		ResponseBean responseBean=new MarkController().getMarksFromFile();
+		List<Mark> responseBean=new MarkController().getMarksFromFile();
 		return responseBean;
 		
 	}

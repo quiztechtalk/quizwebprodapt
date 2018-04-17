@@ -1,13 +1,16 @@
 package main.java.com.prodapt.quiz.service;
 
 
-import javax.websocket.server.PathParam;
+import java.io.IOException;
 
-import main.java.com.prodapt.quiz.beans.ResponseBean;
 import main.java.com.prodapt.quiz.controller.QuestionController;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONException;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,15 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
  *
  */
 
-@RestController("/question")
+@RestController
 public class QuestionService {
 	
 	
 	@RequestMapping("/getQuestions/{topic}/{mark}")
-	public ResponseBean getMarks(@PathParam("topic") String topic,@PathParam("mark") Integer mark) throws JSONException{
-		
-		ResponseBean responseBean=new QuestionController().getQuizFromFile(topic,mark);
-		return responseBean;
+	public String getMarks(@RequestParam(value="topic", defaultValue="java") String topic,@RequestParam(value="mark", defaultValue="10") Integer mark) throws JSONException, JsonGenerationException, JsonMappingException, IOException{
+		ObjectMapper objectMapper=new ObjectMapper();
+		return objectMapper.writeValueAsString(new QuestionController().getQuizFromFile(topic,mark));
 		
 	}
 

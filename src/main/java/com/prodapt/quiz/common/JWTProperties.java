@@ -26,7 +26,7 @@ public class JWTProperties {
 			try{
 				
 			properties=new Properties();
-			InputStream inputStream=JWTProperties.class.getResourceAsStream("/com/properties/jwt.properties");
+			InputStream inputStream=JWTProperties.class.getResourceAsStream("/jwt.properties");
 			properties.load(inputStream);
 			inputStream.close();
 			}

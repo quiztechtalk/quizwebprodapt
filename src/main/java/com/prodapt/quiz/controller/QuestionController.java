@@ -169,14 +169,14 @@ private ResponseBean getRandomQuestions(final Map<Integer, List<Quiz>> allQuesti
 		try {
 			
 			 JSONParser parser = new JSONParser();
-				InputStream inputStream=TopicController.class.getResourceAsStream("/com/properties/local.quiz.json");
+				InputStream inputStream=TopicController.class.getResourceAsStream("/local.quiz.json");
 	        	Reader reader=new InputStreamReader(inputStream);
 	            Object obj = parser.parse(reader);
 	            
 	         ObjectMapper objectMapper=new ObjectMapper();
 	         List<Quiz> lQuizs=objectMapper.readValue(obj.toString(), TypeFactory.collectionType(List.class, Quiz.class));
 	         
-	         List<Quiz> filteredQuiz=lQuizs.stream().filter(a->a.getTopic().equals(topic)).collect(Collectors.toList());
+	         List<Quiz> filteredQuiz=lQuizs.stream().filter(a->a.getTopic().equalsIgnoreCase(topic)).collect(Collectors.toList());
 		
 			responceBean = getTopicStatus(filteredQuiz,mark);
 		}

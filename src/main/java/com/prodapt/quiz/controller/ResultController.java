@@ -1,5 +1,6 @@
 package main.java.com.prodapt.quiz.controller;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -39,7 +40,7 @@ public class ResultController {
 
 		try {
 			JSONParser parser = new JSONParser();
-			InputStream inputStream=TopicController.class.getResourceAsStream("/com/properties/local.quiz.json");
+			InputStream inputStream=TopicController.class.getResourceAsStream("/local.quiz.json");
         	Reader reader=new InputStreamReader(inputStream);
             Object obj = parser.parse(reader);
             
@@ -146,6 +147,47 @@ private ResponseBean getRandomQuestions(final Map<Integer, Quiz> allQuestionsLis
 				splitQuizMap.put(quiz.getQuestionId(), quiz);
 		}
 		return splitQuizMap;
+	}
+	
+	
+	
+	public ResponseBean getResultFromFile(final Answer answer) throws JSONException {
+		ResponseBean responceBean = new ResponseBean();
+		TokenService tokenService = new TokenService();
+
+		try {
+			 JSONParser parser = new JSONParser();
+				InputStream inputStream=TopicController.class.getResourceAsStream("/local.quiz.json");
+	        	Reader reader=new InputStreamReader(inputStream);
+	            Object obj = parser.parse(reader);
+	            
+	         ObjectMapper objectMapper=new ObjectMapper();
+	         List<Quiz> lQuizs=objectMapper.readValue(obj.toString(), TypeFactory.collectionType(List.class, Quiz.class));
+	         
+	         List<Quiz> filteredQuiz=lQuizs.stream().filter(a->a.getTopic().equalsIgnoreCase(answer.getTopic())).collect(Collectors.toList());
+		
+			responceBean = getTopicStatus(filteredQuiz,answer);
+		}
+
+		catch (ParseException exception) {
+			// UTF-8 encoding not supported
+			responceBean = ResponseData.internalError();
+			exception.printStackTrace();
+		}
+
+		catch (FileNotFoundException exception) {
+			// Invalid Signing configuration / Couldn't convert Claims.
+			responceBean = ResponseData.internalError();
+			exception.printStackTrace();
+		}
+		
+		catch (IOException exception) {
+			// Invalid Signing configuration / Couldn't convert Claims.
+			responceBean = ResponseData.internalError();
+			exception.printStackTrace();
+		}
+		return responceBean;
+
 	}
 	
 	
