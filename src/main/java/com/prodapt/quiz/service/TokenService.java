@@ -55,7 +55,7 @@ public class TokenService {
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.POST,value="/verifyToken/{user}")
+	@RequestMapping(method = RequestMethod.PUT,value="/verifyToken/{user}")
 	public String verifyToken(@RequestParam(value="user", defaultValue="user") String user, @RequestBody String token) throws JSONException, JsonGenerationException, JsonMappingException, IOException{
 		Token token2=getPojo(token, Token.class);
 		ObjectMapper objectMapper=new ObjectMapper();
