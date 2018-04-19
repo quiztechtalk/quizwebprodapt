@@ -4,9 +4,12 @@ package main.java.com.prodapt.quiz.service;
 import java.io.IOException;
 
 import main.java.com.prodapt.quiz.beans.Token;
+import main.java.com.prodapt.quiz.controller.QuestionController;
 import main.java.com.prodapt.quiz.controller.TokenController;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONException;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,26 +33,34 @@ public class TokenService {
 	
 	
 	@RequestMapping(method = RequestMethod.POST,value="/createToken")
-	public String createToken() throws JSONException{
-		return new TokenController().createToken();
+	public String createToken() throws JSONException, JsonGenerationException, JsonMappingException, IOException{
+		ObjectMapper objectMapper=new ObjectMapper();
+		return objectMapper.writeValueAsString(new TokenController().createToken());
+		
 	}
 	
 	@RequestMapping(method = RequestMethod.POST,value="/createToken/{user}/{time}")
-	public String createTokenBasedOnTime(@RequestParam(value="user", defaultValue="user") String user,@RequestParam(value="time", defaultValue="10") String time) throws NumberFormatException, JSONException{
-		return new TokenController().createTokenBasedOnSessionTime(user,Integer.parseInt(time));
+	public String createTokenBasedOnTime(@RequestParam(value="user", defaultValue="user") String user,@RequestParam(value="time", defaultValue="10") String time) throws NumberFormatException, JSONException, JsonGenerationException, JsonMappingException, IOException{
+		ObjectMapper objectMapper=new ObjectMapper();
+		return objectMapper.writeValueAsString(new TokenController().createTokenBasedOnSessionTime(user,Integer.parseInt(time)));
+		
 	}
 	
 	
 	@RequestMapping(method = RequestMethod.POST,value="/verifyToken")
-	public String verifyToken(@RequestBody String token) throws JSONException{
+	public String verifyToken(@RequestBody String token) throws JSONException, JsonGenerationException, JsonMappingException, IOException{
 		Token token2=getPojo(token, Token.class);
-		return new TokenController().verifyToken(token2.getToken());
+		ObjectMapper objectMapper=new ObjectMapper();
+		return objectMapper.writeValueAsString(new TokenController().verifyToken(token2.getToken()));
+		
 	}
 	
 	@RequestMapping(method = RequestMethod.POST,value="/verifyToken/{user}")
-	public String verifyToken(@RequestParam(value="user", defaultValue="user") String user, @RequestBody String token) throws JSONException{
+	public String verifyToken(@RequestParam(value="user", defaultValue="user") String user, @RequestBody String token) throws JSONException, JsonGenerationException, JsonMappingException, IOException{
 		Token token2=getPojo(token, Token.class);
-		return new TokenController().verifyUserToken(user,token2.getToken());
+		ObjectMapper objectMapper=new ObjectMapper();
+		return objectMapper.writeValueAsString(new TokenController().verifyUserToken(user,token2.getToken()));
+		
 	}
 	
 	
