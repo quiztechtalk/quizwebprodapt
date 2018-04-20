@@ -32,7 +32,7 @@ public class TokenController {
 		String token = "";
 		try {
 			
-			Date expireTime = new Date(System.currentTimeMillis() + 40000);
+			Date expireTime = new Date(System.currentTimeMillis() + Integer.parseInt(JWTProperties.getInstance().getProperty("timeFotRootUser")));
 			Algorithm algorithm = Algorithm.HMAC256(user.getPassword());
 			token = JWT.create().withExpiresAt(expireTime)
 					.withIssuer(user.getName())
