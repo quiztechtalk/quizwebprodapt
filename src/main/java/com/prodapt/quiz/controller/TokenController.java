@@ -89,11 +89,10 @@ public String createTokenBasedOnSessionTime(final String user,final Integer sess
 	}
 	
 	
-public static String verifyToken(String token) throws CustomQuizException{
+public static String verifyToken(String token) throws CustomQuizException, IllegalArgumentException, UnsupportedEncodingException{
 		
 		//ResponseBean responceBean=new ResponseBean();
 		String status="";
-		try {
 			Algorithm algorithm = Algorithm.HMAC256(JWTProperties.getInstance().getProperty("secretKey"));
 			JWTVerifier verifier = JWT.require(algorithm)
 					.withIssuer(JWTProperties.getInstance().getProperty("issuer"))
@@ -103,9 +102,6 @@ public static String verifyToken(String token) throws CustomQuizException{
 			verifier.verify(token);
 			status=ResponseMessage.SUCCESS;
 			//responceBean=ResponseData.success(ResponseMessage.SUCCESS);
-		} 
-		catch (Exception exception) {
-		}
 		
 		
 		
