@@ -2,6 +2,7 @@ package main.java.com.prodapt.quiz.service;
 
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import main.java.com.prodapt.quiz.beans.Token;
 import main.java.com.prodapt.quiz.beans.User;
@@ -46,18 +47,12 @@ public class TokenService {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST,value="/createToken/{user}/{time}")
-	public Object createTokenBasedOnTime(@RequestParam(value="user", defaultValue="user") String user,@RequestParam(value="time", defaultValue="10") String time,@RequestHeader(value="token") String token) {
-		try{
+	public Object createTokenBasedOnTime(@RequestParam(value="user", defaultValue="user") String user,@RequestParam(value="time", defaultValue="10") String time,@RequestHeader(value="token") String token) throws IllegalArgumentException, CustomQuizException, JsonGenerationException, JsonMappingException, IOException, JSONException {
+		
 		TokenController.verifyToken(token);
 		ObjectMapper objectMapper=new ObjectMapper();
 		return objectMapper.writeValueAsString(new TokenController().createTokenBasedOnSessionTime(user,Integer.parseInt(time)));
-		}
-		catch(TokenExpiredException ex){
-			return new CustomQuizException(ex);
-		}
-		catch(Exception e){
-			return new CustomQuizException(e);
-		}
+		
 		
 	}
 	
@@ -71,20 +66,11 @@ public class TokenService {
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT,value="/verifyToken/{user}")
-	public Object verifyToken(@RequestParam(value="user", defaultValue="user") String user, @RequestBody String userToken,@RequestHeader(value="token") String token) {
-		
-		try{
+	public Object verifyToken(@RequestParam(value="user", defaultValue="user") String user, @RequestBody String userToken,@RequestHeader(value="token") String token) throws IllegalArgumentException, CustomQuizException, JsonGenerationException, JsonMappingException, IOException, JSONException {
 		TokenController.verifyToken(token);
 		Token token2=getPojo(userToken, Token.class);
 		ObjectMapper objectMapper=new ObjectMapper();
 		return objectMapper.writeValueAsString(new TokenController().verifyUserToken(user,token2.getToken()));
-		}
-		catch(TokenExpiredException ex){
-			return new CustomQuizException(ex);
-		}
-		catch(Exception e){
-			return new CustomQuizException(e);
-		}
 		
 	}
 	
