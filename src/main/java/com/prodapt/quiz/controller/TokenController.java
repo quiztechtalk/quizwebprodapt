@@ -4,8 +4,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 import main.java.com.prodapt.quiz.beans.ResponseBean;
+import main.java.com.prodapt.quiz.beans.User;
+import main.java.com.prodapt.quiz.common.CustomQuizException;
 import main.java.com.prodapt.quiz.common.JWTProperties;
-import main.java.com.prodapt.quiz.common.ResponseData;
 import main.java.com.prodapt.quiz.common.ResponseMessage;
 
 import org.json.JSONException;
@@ -24,7 +25,7 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 
 public class TokenController {
 	
-	public String createToken() throws JSONException{
+	public String createToken(User user) throws JSONException{
 		
 		//ResponseBean responceBean=new ResponseBean();
 		
@@ -32,9 +33,9 @@ public class TokenController {
 		try {
 			
 			Date expireTime = new Date(System.currentTimeMillis() + 40000);
-			Algorithm algorithm = Algorithm.HMAC256(JWTProperties.getInstance().getProperty("secretKey"));
+			Algorithm algorithm = Algorithm.HMAC256(JWTProperties.getInstance().getProperty(user.getPassword()));
 			token = JWT.create().withExpiresAt(expireTime)
-					.withIssuer(JWTProperties.getInstance().getProperty("issuer"))
+					.withIssuer(JWTProperties.getInstance().getProperty(user.getName()))
 					.sign(algorithm);
 		} 
 		
@@ -88,7 +89,7 @@ public String createTokenBasedOnSessionTime(final String user,final Integer sess
 	}
 	
 	
-public String verifyToken(String token) throws JSONException{
+public static String verifyToken(String token) throws CustomQuizException{
 		
 		//ResponseBean responceBean=new ResponseBean();
 		String status="";
@@ -103,22 +104,10 @@ public String verifyToken(String token) throws JSONException{
 			status=ResponseMessage.SUCCESS;
 			//responceBean=ResponseData.success(ResponseMessage.SUCCESS);
 		} 
-		catch (TokenExpiredException exception) {
-			status=ResponseMessage.TOKEN_EXPIRED;
-			//responceBean=ResponseData.expireToken();
+		catch (Exception exception) {
 		}
 		
-		catch (UnsupportedEncodingException exception) {
-			// UTF-8 encoding not supported
-			status=ResponseMessage.INVALID_TOKEN;
-			//responceBean=ResponseData.invalidToken();
-		}
 		
-		catch (JWTCreationException exception) {
-			// Invalid Signing configuration / Couldn't convert Claims.
-			//responceBean=ResponseData.invalidToken();
-			status=ResponseMessage.INVALID_TOKEN;
-		}
 		
 		
 		return status;

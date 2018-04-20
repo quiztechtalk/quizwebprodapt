@@ -1,3 +1,4 @@
+main\java\com\prodapt\quiz\common\CustomQuizException.class
 main\java\com\prodapt\quiz\beans\Answer.class
 main\java\com\prodapt\quiz\beans\Quiz.class
 main\java\com\prodapt\quiz\controller\QuestionController.class
@@ -12,6 +13,7 @@ main\java\com\prodapt\quiz\common\MongoProperties.class
 main\java\com\prodapt\quiz\common\ResponseData.class
 main\java\com\prodapt\quiz\beans\Topic.class
 main\java\com\prodapt\quiz\controller\AnswerController.class
+main\java\com\prodapt\quiz\beans\User.class
 main\java\com\prodapt\quiz\Greeting.class
 main\java\com\prodapt\quiz\beans\Mark.class
 main\java\com\prodapt\quiz\beans\Result.class
