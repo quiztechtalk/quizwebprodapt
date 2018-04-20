@@ -33,9 +33,9 @@ public class TokenController {
 		try {
 			
 			Date expireTime = new Date(System.currentTimeMillis() + 40000);
-			Algorithm algorithm = Algorithm.HMAC256(JWTProperties.getInstance().getProperty(user.getPassword()));
+			Algorithm algorithm = Algorithm.HMAC256(user.getPassword());
 			token = JWT.create().withExpiresAt(expireTime)
-					.withIssuer(JWTProperties.getInstance().getProperty(user.getName()))
+					.withIssuer(user.getName())
 					.sign(algorithm);
 		} 
 		
