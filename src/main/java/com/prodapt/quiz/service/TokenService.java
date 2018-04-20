@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
+
 
 
 /**
@@ -44,10 +46,18 @@ public class TokenService {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST,value="/createToken/{user}/{time}")
-	public String createTokenBasedOnTime(@RequestParam(value="user", defaultValue="user") String user,@RequestParam(value="time", defaultValue="10") String time,@RequestHeader(value="token") String token) throws CustomQuizException, JSONException, JsonGenerationException, JsonMappingException, NumberFormatException, IOException{
+	public Object createTokenBasedOnTime(@RequestParam(value="user", defaultValue="user") String user,@RequestParam(value="time", defaultValue="10") String time,@RequestHeader(value="token") String token) {
+		try{
 		TokenController.verifyToken(token);
 		ObjectMapper objectMapper=new ObjectMapper();
 		return objectMapper.writeValueAsString(new TokenController().createTokenBasedOnSessionTime(user,Integer.parseInt(time)));
+		}
+		catch(TokenExpiredException ex){
+			return new CustomQuizException(ex);
+		}
+		catch(Exception e){
+			return new CustomQuizException(e);
+		}
 		
 	}
 	
@@ -61,11 +71,20 @@ public class TokenService {
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT,value="/verifyToken/{user}")
-	public String verifyToken(@RequestParam(value="user", defaultValue="user") String user, @RequestBody String userToken,@RequestHeader(value="token") String token) throws CustomQuizException, JSONException, JsonGenerationException, JsonMappingException, IOException{
+	public Object verifyToken(@RequestParam(value="user", defaultValue="user") String user, @RequestBody String userToken,@RequestHeader(value="token") String token) {
+		
+		try{
 		TokenController.verifyToken(token);
 		Token token2=getPojo(userToken, Token.class);
 		ObjectMapper objectMapper=new ObjectMapper();
 		return objectMapper.writeValueAsString(new TokenController().verifyUserToken(user,token2.getToken()));
+		}
+		catch(TokenExpiredException ex){
+			return new CustomQuizException(ex);
+		}
+		catch(Exception e){
+			return new CustomQuizException(e);
+		}
 		
 	}
 	

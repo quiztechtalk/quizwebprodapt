@@ -34,7 +34,7 @@ public class CustomQuizException extends Exception {
 	}
 	
 	public CustomQuizException(Exception exception) {
-		super(ResponseMessage.INVALID_TOKEN);
+		super(exception.getMessage());
 	}
 	
 	public CustomQuizException(JSONException exception) {

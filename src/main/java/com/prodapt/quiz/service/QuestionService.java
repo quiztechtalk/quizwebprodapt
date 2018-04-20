@@ -1,20 +1,17 @@
 package main.java.com.prodapt.quiz.service;
 
 
-import java.io.IOException;
-
 import main.java.com.prodapt.quiz.common.CustomQuizException;
 import main.java.com.prodapt.quiz.controller.QuestionController;
 import main.java.com.prodapt.quiz.controller.TokenController;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.json.JSONException;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.auth0.jwt.exceptions.TokenExpiredException;
 
 /**
  * 
@@ -27,10 +24,18 @@ public class QuestionService {
 	
 	
 	@RequestMapping("/getQuestions/{topic}/{mark}")
-	public String getMarks(@RequestParam(value="topic", defaultValue="java") String topic,@RequestParam(value="mark", defaultValue="10") Integer mark,@RequestHeader(value="token") String token) throws CustomQuizException, JSONException, JsonGenerationException, JsonMappingException, IOException{
+	public Object getMarks(@RequestParam(value="topic", defaultValue="java") String topic,@RequestParam(value="mark", defaultValue="10") Integer mark,@RequestHeader(value="token") String token) {
+		try{
 		TokenController.verifyToken(token);
 		ObjectMapper objectMapper=new ObjectMapper();
 		return objectMapper.writeValueAsString(new QuestionController().getQuizFromFile(topic,mark));
+	}
+	catch(TokenExpiredException ex){
+		return new CustomQuizException(ex);
+	}
+	catch(Exception e){
+		return new CustomQuizException(e);
+	}
 		
 	}
 
