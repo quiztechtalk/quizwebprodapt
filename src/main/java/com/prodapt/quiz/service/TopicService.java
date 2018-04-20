@@ -1,14 +1,18 @@
 package main.java.com.prodapt.quiz.service;
 
-import java.util.List;
+import java.io.UnsupportedEncodingException;
 
-import main.java.com.prodapt.quiz.beans.ResponseBean;
-import main.java.com.prodapt.quiz.beans.Topic;
+import main.java.com.prodapt.quiz.common.CustomQuizException;
+import main.java.com.prodapt.quiz.controller.TokenController;
 import main.java.com.prodapt.quiz.controller.TopicController;
 
 import org.json.JSONException;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 
 /**
  * 
@@ -22,9 +26,19 @@ public class TopicService {
 	
 	
 	@RequestMapping("/getTopics")
-	public List<Topic> createToken() throws JSONException{
+	public Object createToken(@RequestHeader(value="token") String token){
+		try{
+		TokenController.verifyToken(token);
 		return new TopicController().getTopicsFromFile();
+		}
+		catch(TokenExpiredException ex){
+			return new CustomQuizException(ex);
+		}
+		catch(Exception e){
+			return new CustomQuizException(e);
+		}
+		
+		
 	}
-	
 
 }

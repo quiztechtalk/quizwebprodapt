@@ -33,6 +33,10 @@ public class CustomQuizException extends Exception {
 		super(ResponseMessage.INVALID_TOKEN);
 	}
 	
+	public CustomQuizException(Exception exception) {
+		super(ResponseMessage.INVALID_TOKEN);
+	}
+	
 	public CustomQuizException(JSONException exception) {
 		super(ResponseMessage.INVALID_TOKEN);
 	}
@@ -42,6 +46,10 @@ public class CustomQuizException extends Exception {
 	}
 	
 	public CustomQuizException(UnsupportedEncodingException exception) {
+		super(ResponseMessage.INVALID_TOKEN);
+	}
+	
+	public CustomQuizException(RuntimeException exception) {
 		super(ResponseMessage.INVALID_TOKEN);
 	}
 	
