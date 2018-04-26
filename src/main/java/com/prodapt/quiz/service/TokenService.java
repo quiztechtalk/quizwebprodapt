@@ -2,7 +2,6 @@ package main.java.com.prodapt.quiz.service;
 
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import main.java.com.prodapt.quiz.beans.Token;
 import main.java.com.prodapt.quiz.beans.User;
@@ -20,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.auth0.jwt.exceptions.TokenExpiredException;
 
 
 
