@@ -42,8 +42,8 @@ public class QuestionService {
 	}
 	
 	
-	@RequestMapping("/getNextQuestion/{quizId}")
-	public Object getNextQuestion(@RequestParam(value="quizId") String userQuizId,@RequestHeader(value="token") String token) throws IllegalArgumentException, CustomQuizException, JsonGenerationException, JsonMappingException, IOException, JSONException {
+	@RequestMapping("/getNextQuestion/{userQuizId}")
+	public Object getNextQuestion(@RequestParam(value="userQuizId") String userQuizId,@RequestHeader(value="token") String token) throws IllegalArgumentException, CustomQuizException, JsonGenerationException, JsonMappingException, IOException, JSONException {
 		TokenController.verifyToken(token);
 		ObjectMapper objectMapper=new ObjectMapper();
 		if(quizId.equals(userQuizId)){
