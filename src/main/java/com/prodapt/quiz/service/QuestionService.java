@@ -29,6 +29,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class QuestionService {
 	
 	
+
+	
+	
+	
 	@RequestMapping("/startQuizForUser/{topic}")
 	public Object getMarks(@RequestParam(value="topic", defaultValue="java") String topic,@RequestHeader(value="token") String token) throws IllegalArgumentException, CustomQuizException, JsonGenerationException, JsonMappingException, IOException, JSONException {
 		TokenController.verifyToken(token);
@@ -43,10 +47,10 @@ public class QuestionService {
 	
 	
 	@RequestMapping("/getNextQuestion/{userQuizId}")
-	public Object getNextQuestion(@RequestParam(value="userQuizId") String userQuizId,@RequestHeader(value="token") String token) throws IllegalArgumentException, CustomQuizException, JsonGenerationException, JsonMappingException, IOException, JSONException {
+	public Object getNextQuestion(@RequestParam(value="userQuizId",defaultValue="userQuizId") String userQuizId,@RequestHeader(value="token") String token) throws IllegalArgumentException, CustomQuizException, JsonGenerationException, JsonMappingException, IOException, JSONException {
 		TokenController.verifyToken(token);
 		ObjectMapper objectMapper=new ObjectMapper();
-		if(quizId.equals(userQuizId)){
+		if(!quizId.trim().isEmpty()){
 		Quiz quiz=setQuiz.iterator().next();
 		quiz.setQuizId(quizId);
 		setQuiz.remove(quiz);
