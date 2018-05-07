@@ -1,5 +1,6 @@
 package main.java.com.prodapt.quiz;
 
+
 public class Greeting {
 
     private final long id;

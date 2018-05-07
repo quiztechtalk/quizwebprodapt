@@ -1,39 +1,17 @@
 [{ 
-    "name" : "Java"
+    "name" : "Java",
+    "mark" : "30",
+    "time" : "30"
 },
 { 
     
-    "name" : ".Net"
+    "name" : "Java Script",
+     "mark" : "20",
+    "time" : "30"
 },
 { 
     
-    "name" : "Ruby"
-},
-{ 
-   
-    "name" : "Python"
-},
-{ 
-   
-    "name" : "SQL"
-},
-{ 
-    
-    "name" : "Java"
-},
-{ 
-    
-    "name" : ".Net"
-},
-{ 
-    
-    "name" : "SQL"
-},
-{ 
-   
-    "name" : "Python"
-},
-{ 
-    
-    "name" : "Java"
+    "name" : "Angular",
+     "mark" : "15",
+    "time" : "15"
 }]

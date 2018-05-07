@@ -14,10 +14,8 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONException;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -43,16 +41,6 @@ public class TokenService {
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.POST,value="/createToken/{user}/{time}")
-	public Object createTokenBasedOnTime(@RequestParam(value="user", defaultValue="user") String user,@RequestParam(value="time", defaultValue="10") String time,@RequestHeader(value="token") String token) throws IllegalArgumentException, CustomQuizException, JsonGenerationException, JsonMappingException, IOException, JSONException {
-		
-		TokenController.verifyToken(token);
-		ObjectMapper objectMapper=new ObjectMapper();
-		return objectMapper.writeValueAsString(new TokenController().createTokenBasedOnSessionTime(user,Integer.parseInt(time)));
-		
-		
-	}
-	
 	
 	@RequestMapping(method = RequestMethod.POST,value="/verifyToken")
 	public String verifyToken(@RequestBody String token) throws JsonGenerationException, JsonMappingException, IOException, CustomQuizException{
@@ -61,17 +49,6 @@ public class TokenService {
 		return objectMapper.writeValueAsString(TokenController.verifyToken(token2.getToken()));
 		
 	}
-	
-	@RequestMapping(method = RequestMethod.PUT,value="/verifyToken/{user}")
-	public Object verifyToken(@RequestParam(value="user", defaultValue="user") String user, @RequestBody String userToken,@RequestHeader(value="token") String token) throws IllegalArgumentException, CustomQuizException, JsonGenerationException, JsonMappingException, IOException, JSONException {
-		TokenController.verifyToken(token);
-		Token token2=getPojo(userToken, Token.class);
-		ObjectMapper objectMapper=new ObjectMapper();
-		return objectMapper.writeValueAsString(new TokenController().verifyUserToken(user,token2.getToken()));
-		
-	}
-	
-	
 	
 	
 	public <E, T> E getPojo(String jsonData, Class<E> clazz) {

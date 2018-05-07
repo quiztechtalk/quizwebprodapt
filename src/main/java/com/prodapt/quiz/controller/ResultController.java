@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import main.java.com.prodapt.quiz.beans.Answer;
 import main.java.com.prodapt.quiz.beans.Quiz;
+import main.java.com.prodapt.quiz.beans.ResponceSingleQuestion;
 import main.java.com.prodapt.quiz.beans.ResponseBean;
 import main.java.com.prodapt.quiz.beans.Result;
 import main.java.com.prodapt.quiz.common.ResponseData;
@@ -36,7 +37,6 @@ public class ResultController {
 
 	public ResponseBean getResult(final Answer answer) throws JSONException {
 		ResponseBean responceBean = new ResponseBean();
-		TokenService tokenService = new TokenService();
 
 		try {
 			JSONParser parser = new JSONParser();
@@ -51,6 +51,43 @@ public class ResultController {
 			List<Quiz> filteredQuiz=lQuizs.stream().filter(a->a.getTopic().equals(answer.getTopic())).collect(Collectors.toList());
 	
 			responceBean = getTopicStatus(filteredQuiz,answer);
+		}
+
+		
+		catch (JWTCreationException exception) {
+			// Invalid Signing configuration / Couldn't convert Claims.
+			responceBean = ResponseData.invalidToken();
+			exception.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			responceBean = ResponseData.invalidToken();
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			responceBean = ResponseData.invalidToken();
+			e.printStackTrace();
+		}
+
+		return responceBean;
+
+	}
+	
+	public ResponseBean getResultForSingleQuestion(final Answer answer) throws JSONException {
+		ResponseBean responceBean = new ResponseBean();
+
+		try {
+			JSONParser parser = new JSONParser();
+			InputStream inputStream=TopicController.class.getResourceAsStream("/local.quiz.json");
+        	Reader reader=new InputStreamReader(inputStream);
+            Object obj = parser.parse(reader);
+            
+         ObjectMapper objectMapper=new ObjectMapper();
+         List<Quiz> lQuizs=objectMapper.readValue(obj.toString(), TypeFactory.collectionType(List.class, Quiz.class));
+         
+			
+			List<Quiz> filteredQuiz=lQuizs.stream().filter(a->a.getTopic().equals(answer.getTopic())).collect(Collectors.toList());
+	
+			responceBean = getSingleQuestionStatus(filteredQuiz,answer);
 		}
 
 		
@@ -96,6 +133,23 @@ public class ResultController {
 
 	}
 	
+	private ResponseBean getSingleQuestionStatus(final List<Quiz> liQuizs, final Answer answer) throws JSONException {
+
+		ResponseBean responceBean = new ResponseBean();
+		if (liQuizs == null || liQuizs.isEmpty()){
+			responceBean = ResponseData.success("Topic is not available");
+		}
+		else if (liQuizs.stream().mapToInt(i -> i.getMark()).sum() < answer.getMark()) {
+			responceBean = ResponseData
+					.success("certain mark list is not available");
+		} else {
+			responceBean=getResultSingleQuestions(splitQuizBasedOnQuestionId(liQuizs),answer);
+		}
+
+		return responceBean;
+
+	}
+	
 /**
  * 	
  * @param allQuestionsList
@@ -131,6 +185,25 @@ private ResponseBean getRandomQuestions(final Map<Integer, Quiz> allQuestionsLis
 	}
 	listOfResult.add(result);
 	responseBean=ResponseData.success(listOfResult);
+	return responseBean;
+		
+	}
+
+
+private ResponseBean getResultSingleQuestions(final Map<Integer, Quiz> allQuestionsList,final Answer answer) throws JSONException{
+	ResponseBean responseBean=new ResponseBean();
+	ResponceSingleQuestion responceSingleQuestion=new ResponceSingleQuestion();
+	for(Quiz quiz:answer.getAnswers()){
+		if(allQuestionsList.get(quiz.getQuestionId())!=null){
+			responceSingleQuestion.setCorrectAnswer(allQuestionsList.get(quiz.getQuestionId()).getAnswer());
+			responceSingleQuestion.setSelectedAnswer(quiz.getAnswer());
+		}
+		else
+		{
+			System.out.println(quiz.getAnswer()+" Wrong answer "+allQuestionsList.get(quiz.getQuestionId()).getAnswer());
+		}
+	}
+	responseBean=ResponseData.success(responceSingleQuestion);
 	return responseBean;
 		
 	}

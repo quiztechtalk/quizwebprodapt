@@ -15,9 +15,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 import main.java.com.prodapt.quiz.beans.Quiz;
-import main.java.com.prodapt.quiz.beans.ResponseBean;
+import main.java.com.prodapt.quiz.beans.Topic;
 import main.java.com.prodapt.quiz.common.QuizProperties;
-import main.java.com.prodapt.quiz.common.ResponseData;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.type.TypeFactory;
@@ -44,20 +43,9 @@ public class QuestionController {
 	 * topic is suppose not available or given mark is less than the total of collection it will return not available
 	 * @throws JSONException 
 	 */
-	private ResponseBean getTopicStatus(final List<Quiz> liQuizs, final Integer mark) throws JSONException {
+	private Set<Quiz> getTopicStatus(final List<Quiz> liQuizs, final Integer mark) throws JSONException {
 
-		ResponseBean responceBean = new ResponseBean();
-		if (liQuizs == null || liQuizs.isEmpty()){
-			responceBean = ResponseData.success("Topic is not available");
-		}
-		else if (liQuizs.stream().mapToInt(i -> i.getMark()).sum() < mark) {
-			responceBean = ResponseData
-					.success("Question is not available for this mark please select the minimum");
-		} else {
-			responceBean=getRandomQuestions(splitQuiz(liQuizs),mark);
-		}
-
-		return responceBean;
+		return getRandomQuestions(splitQuiz(liQuizs),mark);
 
 	}
 	
@@ -69,14 +57,10 @@ public class QuestionController {
  * based on total mark question is split and how many counts may come those details set in properties file  
  * @throws JSONException 
  */
-private ResponseBean getRandomQuestions(final Map<Integer, List<Quiz>> allQuestionsList,final Integer mark) throws JSONException{
+private Set<Quiz> getRandomQuestions(final Map<Integer, List<Quiz>> allQuestionsList,final Integer mark) throws JSONException{
 		
-		if(QuizProperties.getInstance().get("mark_"+mark)==null || QuizProperties.getInstance().get("mark_"+mark).toString().trim().isEmpty()){
-			return ResponseData
-					.success("Question set is available for this mark");
-		}
-		else
-		{
+	Set<Quiz> seQuizs=new HashSet<Quiz>();
+	
 			Map<Integer,Integer> questionSetMap=new TreeMap<>();
 			/*
 			 * questionSetMap is used to store question mark as key and number of question count is value everything get from properties file
@@ -84,13 +68,12 @@ private ResponseBean getRandomQuestions(final Map<Integer, List<Quiz>> allQuesti
 			for(String questionSet:QuizProperties.getInstance().get("mark_"+mark).toString().split(",")){
 				questionSetMap.put(Integer.parseInt(questionSet.substring(0,questionSet.indexOf("_"))), Integer.parseInt(questionSet.substring(questionSet.indexOf("_")+1)));
 				
-				if(allQuestionsList.get(Integer.parseInt(questionSet.substring(0,questionSet.indexOf("_")))).size()<Integer.parseInt(questionSet.substring(questionSet.indexOf("_")+1))){
-					return ResponseData
-							.success("Question set is available for this mark");
-				}
 			}
-			return ResponseData.success(getQuizBasedOnMark(allQuestionsList,questionSetMap));
-		}
+			
+			System.out.println(getQuizBasedOnMark(allQuestionsList,questionSetMap));
+			
+		seQuizs.addAll(getQuizBasedOnMark(allQuestionsList,questionSetMap));
+		return seQuizs;
 	}
 	
 	/**
@@ -162,9 +145,9 @@ private ResponseBean getRandomQuestions(final Map<Integer, List<Quiz>> allQuesti
 		return listOfRandomQuiz;
 	}
 	
-	public ResponseBean getQuizFromFile(final String topic, final Integer mark) throws JSONException {
+	public Set<Quiz> getQuizFromFile(final String topic) throws JSONException {
 
-		ResponseBean responceBean = new ResponseBean();
+		Set<Quiz> responceBean = new HashSet<Quiz>();
 
 		try {
 			
@@ -173,29 +156,38 @@ private ResponseBean getRandomQuestions(final Map<Integer, List<Quiz>> allQuesti
 	        	Reader reader=new InputStreamReader(inputStream);
 	            Object obj = parser.parse(reader);
 	            
+	            InputStream inputStream2=TopicController.class.getResourceAsStream("/local.topic.json");
+	        	Reader reader2=new InputStreamReader(inputStream2);
+	            Object obj2 = parser.parse(reader2);
+	            
 	         ObjectMapper objectMapper=new ObjectMapper();
 	         List<Quiz> lQuizs=objectMapper.readValue(obj.toString(), TypeFactory.collectionType(List.class, Quiz.class));
 	         
+	         List<Topic> topic2=objectMapper.readValue(obj2.toString(), TypeFactory.collectionType(List.class, Topic.class));
+	         String topicMark="30";
+	         for(Topic topicl:topic2){
+	        	if(topicl.getName().equalsIgnoreCase(topic)) {
+	        		topicMark=topicl.getMark();
+	        	}
+	         }
+	         
 	         List<Quiz> filteredQuiz=lQuizs.stream().filter(a->a.getTopic().equalsIgnoreCase(topic)).collect(Collectors.toList());
 		
-			responceBean = getTopicStatus(filteredQuiz,mark);
+			responceBean = getTopicStatus(filteredQuiz,Integer.parseInt(topicMark));
 		}
 
 		catch (ParseException exception) {
 			// UTF-8 encoding not supported
-			responceBean = ResponseData.internalError();
 			exception.printStackTrace();
 		}
 
 		catch (FileNotFoundException exception) {
 			// Invalid Signing configuration / Couldn't convert Claims.
-			responceBean = ResponseData.internalError();
 			exception.printStackTrace();
 		}
 		
 		catch (IOException exception) {
 			// Invalid Signing configuration / Couldn't convert Claims.
-			responceBean = ResponseData.internalError();
 			exception.printStackTrace();
 		}
 

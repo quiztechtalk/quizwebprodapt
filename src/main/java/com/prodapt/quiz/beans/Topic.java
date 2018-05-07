@@ -12,6 +12,22 @@ public class Topic implements Serializable {
 	private static final long serialVersionUID = 1980954L;
 	private String _id;
 	private String name;
+	private String mark;
+	private String time;
+	
+	
+	public String getMark() {
+		return mark;
+	}
+	public void setMark(String mark) {
+		this.mark = mark;
+	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
 	public String get_id() {
 		return _id;
 	}

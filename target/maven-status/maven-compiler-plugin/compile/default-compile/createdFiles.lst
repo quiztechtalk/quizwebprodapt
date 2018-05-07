@@ -14,6 +14,7 @@ main\java\com\prodapt\quiz\common\ResponseData.class
 main\java\com\prodapt\quiz\beans\Topic.class
 main\java\com\prodapt\quiz\controller\AnswerController.class
 main\java\com\prodapt\quiz\beans\User.class
+main\java\com\prodapt\quiz\beans\ResponceSingleQuestion.class
 main\java\com\prodapt\quiz\Greeting.class
 main\java\com\prodapt\quiz\beans\Mark.class
 main\java\com\prodapt\quiz\beans\Result.class

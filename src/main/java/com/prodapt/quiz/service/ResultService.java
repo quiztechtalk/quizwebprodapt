@@ -22,10 +22,21 @@ public class ResultService {
 	
 	
 	
-	
-	@RequestMapping(method = RequestMethod.POST,value="/getResult")
+	@RequestMapping(method = RequestMethod.POST,value="/endQuizForUser")
 
 	public Object getMarks(@RequestBody String answerData,@RequestHeader(value="token") String token) throws IllegalArgumentException, CustomQuizException, JsonGenerationException, JsonMappingException, IOException, JSONException{
+		
+		TokenController.verifyToken(token);
+		Answer answer=new TokenService().getPojo(answerData, Answer.class);
+		ObjectMapper objectMapper=new ObjectMapper();
+		return objectMapper.writeValueAsString(new ResultController().getResultFromFile(answer));
+		
+		
+	}
+	
+	@RequestMapping(method = RequestMethod.POST,value="/submitUserResponce")
+
+	public Object getRestForSingleQuestion(@RequestBody String answerData,@RequestHeader(value="token") String token) throws IllegalArgumentException, CustomQuizException, JsonGenerationException, JsonMappingException, IOException, JSONException{
 		
 		TokenController.verifyToken(token);
 		Answer answer=new TokenService().getPojo(answerData, Answer.class);

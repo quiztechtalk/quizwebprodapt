@@ -22,8 +22,15 @@ public class Quiz implements Serializable {
 	private Integer questionId;
 	private List<String> option;
 	private String _id;
+	private String quizId;
 	
 	
+	public String getQuizId() {
+		return quizId;
+	}
+	public void setQuizId(String quizId) {
+		this.quizId = quizId;
+	}
 	public String get_id() {
 		return _id;
 	}
