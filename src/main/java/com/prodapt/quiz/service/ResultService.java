@@ -70,7 +70,7 @@ public class ResultService {
 		ObjectMapper objectMapper=new ObjectMapper();*/
 		
 		
-		System.out.println(new ResultController().getResultFromFile(answer));
+		System.out.println(objectMapper.writeValueAsString(new ResultController().getResultForSingleQuestion(answer)));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

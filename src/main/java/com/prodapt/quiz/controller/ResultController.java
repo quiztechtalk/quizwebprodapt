@@ -197,6 +197,7 @@ private ResponseBean getResultSingleQuestions(final Map<Integer, Quiz> allQuesti
 		if(allQuestionsList.get(quiz.getQuestionId())!=null){
 			responceSingleQuestion.setCorrectAnswer(allQuestionsList.get(quiz.getQuestionId()).getAnswer());
 			responceSingleQuestion.setSelectedAnswer(quiz.getAnswer());
+			responceSingleQuestion.setQuestion(allQuestionsList.get(quiz.getQuestionId()).getQuestion());
 		}
 		else
 		{
