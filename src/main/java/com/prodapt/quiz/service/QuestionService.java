@@ -14,9 +14,9 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONException;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class QuestionService {
 	
 	@RequestMapping("/startQuizForUser/{topic}")
-	public Object getMarks(@RequestParam(value="topic", defaultValue="java") String topic,@RequestHeader(value="token") String token) throws IllegalArgumentException, CustomQuizException, JsonGenerationException, JsonMappingException, IOException, JSONException {
+	public Object getMarks(@PathVariable("topic") String topic,@RequestHeader(value="token") String token) throws IllegalArgumentException, CustomQuizException, JsonGenerationException, JsonMappingException, IOException, JSONException {
 		TokenController.verifyToken(token);
 		ObjectMapper objectMapper=new ObjectMapper();
 		setQuiz=new QuestionController().getQuizFromFile(topic);
@@ -42,10 +42,15 @@ public class QuestionService {
 	
 	
 	@RequestMapping("/getNextQuestion/{userQuizId}")
-	public Object getNextQuestion(@RequestParam(value="userQuizId",defaultValue="userQuizId") String userQuizId,@RequestHeader(value="token") String token) throws IllegalArgumentException, CustomQuizException, JsonGenerationException, JsonMappingException, IOException, JSONException {
+	public Object getNextQuestion(@PathVariable("userQuizId") String userQuizId,@RequestHeader(value="token") String token) throws IllegalArgumentException, CustomQuizException, JsonGenerationException, JsonMappingException, IOException, JSONException {
 		TokenController.verifyToken(token);
 		ObjectMapper objectMapper=new ObjectMapper();
-		if(setQuiz.size()==0){
+		
+		if(setQuiz==null || quizId.trim().isEmpty() || !quizId.equals(userQuizId)){
+			return objectMapper.writeValueAsString("Quiz is not started for this user");
+		}
+		
+		if(setQuiz!=null && setQuiz.size()==0){
 			return objectMapper.writeValueAsString("Quiz is completed for this user");
 		}
 		else if(!quizId.trim().isEmpty()){
