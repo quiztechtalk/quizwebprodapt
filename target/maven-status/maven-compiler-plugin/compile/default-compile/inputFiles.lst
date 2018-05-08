@@ -8,11 +8,9 @@ D:\quizwebprodapt\src\main\java\com\prodapt\quiz\service\TopicService.java
 D:\quizwebprodapt\src\main\java\com\prodapt\quiz\common\NetClientGet.java
 D:\quizwebprodapt\src\main\java\com\prodapt\quiz\properties\package-info.java
 D:\quizwebprodapt\src\main\java\com\prodapt\quiz\common\Test.java
-D:\quizwebprodapt\src\main\java\com\prodapt\quiz\Greeting.java
 D:\quizwebprodapt\src\main\java\com\prodapt\quiz\common\ResponseMessage.java
 D:\quizwebprodapt\src\main\java\com\prodapt\quiz\service\TokenService.java
 D:\quizwebprodapt\src\main\java\com\prodapt\quiz\controller\ResultController.java
-D:\quizwebprodapt\src\main\java\com\prodapt\quiz\package-info.java
 D:\quizwebprodapt\src\main\java\com\prodapt\quiz\common\CustomQuizException.java
 D:\quizwebprodapt\src\main\java\com\prodapt\quiz\beans\Quiz.java
 D:\quizwebprodapt\src\main\java\com\prodapt\quiz\beans\Result.java
@@ -39,4 +37,3 @@ D:\quizwebprodapt\src\main\java\com\prodapt\quiz\common\package-info.java
 D:\quizwebprodapt\src\main\java\com\prodapt\quiz\beans\Token.java
 D:\quizwebprodapt\src\main\java\com\prodapt\quiz\beans\Topic.java
 D:\quizwebprodapt\src\main\java\com\prodapt\quiz\controller\TokenController.java
-D:\quizwebprodapt\src\main\java\com\prodapt\quiz\GreetingController.java

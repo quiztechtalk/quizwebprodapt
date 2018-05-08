@@ -4,7 +4,6 @@ main\java\com\prodapt\quiz\beans\Quiz.class
 main\java\com\prodapt\quiz\controller\QuestionController.class
 main\java\com\prodapt\quiz\service\TokenService.class
 main\java\com\prodapt\quiz\common\JsonSimpleReadExample.class
-main\java\com\prodapt\quiz\GreetingController.class
 main\java\com\prodapt\quiz\properties\Test.class
 main\java\com\prodapt\quiz\controller\TokenController.class
 main\java\com\prodapt\quiz\service\TopicService.class
@@ -15,7 +14,6 @@ main\java\com\prodapt\quiz\beans\Topic.class
 main\java\com\prodapt\quiz\controller\AnswerController.class
 main\java\com\prodapt\quiz\beans\User.class
 main\java\com\prodapt\quiz\beans\ResponceSingleQuestion.class
-main\java\com\prodapt\quiz\Greeting.class
 main\java\com\prodapt\quiz\beans\Mark.class
 main\java\com\prodapt\quiz\beans\Result.class
 main\java\com\prodapt\quiz\service\MarkService.class

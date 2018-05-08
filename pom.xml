@@ -46,11 +46,6 @@
 			<version>2.6</version>
 		</dependency>
 
-		<!-- <dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.3.1</version>
-		</dependency> -->
 
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
@@ -73,12 +68,6 @@
 			<version>1.2.17</version>
 		</dependency>
 
-		<!-- <dependency>
-			<groupId>org.mongodb</groupId>
-			<artifactId>mongodb-driver</artifactId>
-			<version>3.4.1</version>
-		</dependency> -->
-
 
 	</dependencies>
 
@@ -90,15 +79,6 @@
 
 
 	<build>
-	<!-- <resources>
-	<resource>
-	<directory>src/com/properties</directory>
-	<excludes>
-          <exclude>**/*.java</exclude>
-        </excludes>
-	
-</resource>
-	</resources> -->
 		<plugins>
 		
 		<plugin>
@@ -114,11 +94,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-
-				<!-- <configuration> <mainClass>com.prodapt.quiz.service.Application</mainClass> 
-					<layout>ZIP</layout> </configuration> <executions> <execution> <goals> <goal>repackage</goal> 
-					</goals> </execution> </executions> -->
-
 			</plugin>
 		</plugins>
 	</build>
