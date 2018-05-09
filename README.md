@@ -30,12 +30,19 @@ Jwt : 3.3.0
 Project Step Up and execute Quiz web services
 
 Step 1 : Sign Up with free trial
+
 Step 2 : download and install using following url
+
 		 https://devcenter.heroku.com/articles/heroku-cli
+		 
 step 3 : create a new app using heroku dashboard
+
 		 https://dashboard.heroku.com/  like "quizwebprodapt"
+		 
 step 4 : create a web project "quizwebprodapt" using maven in eclipse or any other tool
+
 		 (https://github.com/quiztechtalk/quizwebprodapt.git)
+		 
 step 5 : add Procfile in project its indicate the runtime script in heroku app
 
 setp 6 : make clean and install using maven
