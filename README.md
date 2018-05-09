@@ -53,13 +53,13 @@ step 8 : go to project work space location using command prompt
 
 step 9 : run and build in heroku cloud using following command
 
-		$ heroku login   					          	# using with heroku login credentials 
-		$ git init       						          # initialize heroku git repository 
-		$ heroku git:remote -a quizwebprodapt	# initialize the project 
-		$ git add .								            # add the project
-		$ git commit -am "make it better"	  	# commit the changes
-		$ git push heroku master 				      # push the the commit changes into heroku git master
-		$ heroku open							            # open the project in browser
+		$ heroku login   					# using with heroku login credentials 
+		$ git init       				 	# initialize heroku git repository 
+		$ heroku git:remote -a quizwebprodapt			# initialize the project 
+		$ git add .						# add the project
+		$ git commit -am "make it better"	  		# commit the changes
+		$ git push heroku master 				# push the the commit changes into heroku git master
+		$ heroku open						# open the project in browser
 		
 Step 10 : run the quiz web using with swagger tools 
 		  https://app.swaggerhub.com/ sign up using credentials
