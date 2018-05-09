@@ -62,12 +62,14 @@ step 9 : run and build in heroku cloud using following command
 		$ heroku open						# open the project in browser
 		
 Step 10 : run the quiz web using with swagger tools 
+
 		  https://app.swaggerhub.com/ sign up using credentials
 		  upload or develop the swagger json
 		  (https://app.swaggerhub.com/apis/Prodapt3/quizwebprodapt/1.3.0)
 
 
 step 11 : /createToken
+
 			create the jwt token using with user createToken
 			{
 				"name": "testuser",
@@ -75,6 +77,7 @@ step 11 : /createToken
 			}
 			once token created verify with /verifyToken services 
 			then put the token in Authorise Header 
+			
 			
 step 12 : then execute the quiz web services
 
